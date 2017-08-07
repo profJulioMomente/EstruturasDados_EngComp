@@ -43,7 +43,7 @@ int contaPalavras  (char *S, int tam) {
 			return cont;
 		}
 		else {
-			if (S[i] != ' '){ //Ao encontrar um caracter não palavra
+			if (S[i] >= 65 && S[i] <= 90){ //Ao encontrar um caracter de palavra (no caso, apenas letras maiúsculas)
 				if(i == 0 || S[i-1] == ' '){ //se este for o primeiro caracter da string ou se o anterior for um espaço
 					cont++;
 				}
