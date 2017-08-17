@@ -27,5 +27,7 @@ main () {
 	
 	fclose(arq); //Fechamento do arquivo
 	
+	
+	
 	system("pause");
 }
