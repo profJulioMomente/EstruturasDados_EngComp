@@ -8,7 +8,11 @@ typedef struct struct1{
 } no;
 
 no* inserir(no* Raiz, no *novo);
-void imprimir(no *Raiz);
+void preOrdem(no *Raiz);
+void emOrdem(no *Raiz);
+void posOrdem(no *Raiz);
+no* pesquisa(no *Raiz, int busca);
+int eFolha(no *Elemento);
 
 main() {
 	no* Raiz = NULL, *novo;
@@ -24,8 +28,13 @@ main() {
 		
 		Raiz = inserir(Raiz, novo);
 	}
+	printf("\n\n - Pre Ordem\n");
+	preOrdem(Raiz);
+	printf("\n\n - Em Ordem\n");
+	emOrdem(Raiz);
+	printf("\n\n - Pos Ordem\n");
+	posOrdem(Raiz);
 	
-	imprimir(Raiz);
 }
 
 
@@ -44,10 +53,68 @@ no* inserir(no* Raiz, no *novo){
 	}
 }
 
-void imprimir(no *Raiz){
+void preOrdem(no *Raiz){
 	if (Raiz != NULL) {
 		printf("%d\n", Raiz->info);
-		imprimir(Raiz->esq);
-		imprimir(Raiz->dir);
+		preOrdem(Raiz->esq);
+		preOrdem(Raiz->dir);
 	}
 }
+
+void emOrdem(no *Raiz){
+	if (Raiz != NULL) {
+		emOrdem(Raiz->esq);
+		printf("%d\n", Raiz->info);
+		emOrdem(Raiz->dir);
+	}
+}
+
+void posOrdem(no *Raiz){
+	if (Raiz != NULL) {
+		posOrdem(Raiz->esq);
+		posOrdem(Raiz->dir);
+		printf("%d\n", Raiz->info);
+	}
+}
+
+no* pesquisa(no *Raiz, int busca)
+{
+	if( Raiz != NULL) {
+		if(	busca == Raiz->info){
+			return Raiz;	
+		} else if(busca < Raiz->info) {
+			pesquisa(Raiz->esq, busca);
+		} else {
+			pesquisa(Raiz->dir, busca);
+		}
+	} else {
+		return NULL;
+	}
+}
+
+int eFolha(no *Elemento){
+	if(Elemento->esq == NULL && Elemento->dir == NULL) {
+		return 1; //1 == Verdadeiro
+	} else {
+		return 0; //0 == Falso
+	}
+}
+
+no *pai(no* Raiz, no* Elemento)
+{
+	no *atual, *ePai=NULL;
+	atual = Raiz;
+	if(Elemento == Raiz){
+		return NULL;
+	} else {
+		while(atual != Elemento){
+			ePai = atual;
+			if(Elemento->info < ePai->info){
+				atual = ePai->esq;
+			} else {
+				atual = ePai->dir;
+			}
+		}
+		return ePai;
+	}
+}	
