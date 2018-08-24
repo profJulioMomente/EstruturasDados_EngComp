@@ -6,7 +6,7 @@
 void preencheVetor(int V[], int tam, int max);
 void imprimeVetor(int V[], int tam);
 void troca(int *A, int *B);
-void bubbleSort(int V[], int tam);
+void insertionSort(int V[], int tam);
 
 int main (){
 	int *Aleatorio;
@@ -24,13 +24,11 @@ int main (){
 	preencheVetor(Aleatorio, tam ,max);
 	printf("\nDesordenado\n");
 	//imprimeVetor(Aleatorio, tam);
-	//system("pause");
 	
 	t_inicio = clock();
-	bubbleSort(Aleatorio, tam);
+	insertionSort(Aleatorio, tam);
 	t_final = clock();
-	
-	//system("pause");
+
 	printf("\nOrdenado\n");
 	//imprimeVetor(Aleatorio, tam);
 	
@@ -70,14 +68,15 @@ void troca(int *A, int *B){
 	*B = aux;
 }
 
-void bubbleSort(int V[], int tam){
-	int i, j;
-	
+void insertionSort(int V[], int tam){
+	int i, j, valorAtual;
 	for(i=1; i<tam; i++){
-		for(j=0;j<(tam-i);j++){
-			if(V[j]>V[j+1]){
-				troca(&V[j], &V[j+1]);
-			}
+		valorAtual = V[i];
+		j = i-1;
+		while(j>=0 && V[j] > valorAtual){
+			V[j+1] = V[j];
+			j--;
 		}
+		V[j+1] = valorAtual;
 	}
 }

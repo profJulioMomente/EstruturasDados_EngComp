@@ -11,6 +11,8 @@ void selectionSort(int V[], int tam);
 int main (){
 	int *Aleatorio;
 	int tam, max;
+	float tempo;
+	clock_t t_inicio, t_final;
 	
 	printf("Informe o tamanho do vetor: ");
 	scanf("%d", &tam);
@@ -21,18 +23,21 @@ int main (){
 	
 	preencheVetor(Aleatorio, tam ,max);
 	printf("\nDesordenado\n");
-	imprimeVetor(Aleatorio, tam);
-	system("pause");
-
+	//imprimeVetor(Aleatorio, tam);
+	//system("pause");
+	
+	t_inicio = clock();
 	selectionSort(Aleatorio, tam);
+	t_final = clock();
 
-	system("pause");
+	//system("pause");
 	printf("\nOrdenado\n");
-	imprimeVetor(Aleatorio, tam);
+	//imprimeVetor(Aleatorio, tam);
 	
+	tempo = ((float)t_final - (float)t_inicio)/CLOCKS_PER_SEC;
+	printf("O tempo de ordenacao foi de %f segundos\n\n", tempo);
 	
 	system("pause");
-	
 }
 
 
