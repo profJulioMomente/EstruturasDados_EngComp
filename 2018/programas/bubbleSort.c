@@ -7,10 +7,12 @@ void preencheVetor(int V[], int tam, int max);
 void imprimeVetor(int V[], int tam);
 void troca(int *A, int *B);
 void bubbleSort(int V[], int tam);
+int buscaBinaria(int V[], int tam, int busca);
+int buscaBinariaRecursiva(int V[], int inicio, int fim, int busca);
 
 int main (){
 	int *Aleatorio;
-	int tam, max;
+	int tam, max, busca,pos;
 	float tempo;
 	clock_t t_inicio, t_final;
 	
@@ -23,22 +25,31 @@ int main (){
 	
 	preencheVetor(Aleatorio, tam ,max);
 	printf("\nDesordenado\n");
-	//imprimeVetor(Aleatorio, tam);
-	//system("pause");
+	imprimeVetor(Aleatorio, tam);
+	system("pause");
 	
 	t_inicio = clock();
 	bubbleSort(Aleatorio, tam);
 	t_final = clock();
 	
-	//system("pause");
+	system("pause");
 	printf("\nOrdenado\n");
-	//imprimeVetor(Aleatorio, tam);
+	imprimeVetor(Aleatorio, tam);
 	
 	tempo = ((float)t_final - (float)t_inicio)/CLOCKS_PER_SEC;
 	printf("O tempo de ordenacao foi de %f segundos\n\n", tempo);
 	
-	system("pause");
-	
+	while(1){
+		printf("Digite o valor que deseja buscar: ");
+		scanf("%d", &busca);
+		pos = buscaBinariaRecursiva(Aleatorio,0,tam-1,busca);
+		if(pos == -1){
+			printf("valor nao encontrado\n");
+		} else {
+			printf("valor encontrado na posicao %d\n",pos);
+		}
+		system("pause");
+	}
 }
 
 
@@ -78,6 +89,70 @@ void bubbleSort(int V[], int tam){
 			if(V[j]>V[j+1]){
 				troca(&V[j], &V[j+1]);
 			}
+		}
+	}
+}
+
+int buscaBinaria(int *V, int tam, int busca){
+	int meio, inicio, fim;
+	inicio = 0;
+	fim = tam-1;
+	do {
+		meio = (inicio + fim)/2;
+		if(V[meio] == busca)
+			return meio;
+		else if(V[meio] > busca){
+			fim = meio-1;
+		} else {
+			inicio = meio+1;
+		}
+	} while(inicio <= fim);
+	
+	return -1;
+}
+
+int buscaBinariaRecursiva(int V[], int inicio, int fim, int busca)
+{
+	int meio;
+	
+	if (inicio > fim) {
+		return -1;
+	} else {
+		meio = (inicio + fim)/2;
+		if(V[meio] == busca){
+			return meio;
+		} else if(V[meio] > busca){
+			return buscaBinariaRecursiva(V,inicio,meio-1,busca);
+		} else {
+			return buscaBinariaRecursiva(V,meio+1,fim,busca);
+		}
+	}
+}
+
+int maiorValor(int V[], int tam){
+	int maior,i;
+	
+	for(i=0;i<tam;i++){
+		if (i==0) {
+			maior = V[i];
+		} else  if (V[i] > maior) {
+			maior = V[i];
+		}
+	}
+	return maior;
+}
+
+int maiorValorRecursivo(int V[], int inicio, int fim){
+	int maior;
+	
+	if(inicio == fim) {
+		return V[inicio];
+	} else {
+		maior = maiorValorRecursivo(V,inicio, fim-1);
+		if (V[fim] > maior){
+			return V[fim];
+		} else {
+			return maior;
 		}
 	}
 }
